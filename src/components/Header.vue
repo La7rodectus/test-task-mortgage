@@ -12,10 +12,14 @@ export default {
     msg: String,
   },
   methods: {
-    // asyncData({ store }) {
-    //   store.commit('INCREMENT');
-    // },
-  },
+    asyncData: ({ store }) => new Promise((resolve) => {
+      console.log('await storage.dispatch');
+      resolve(store.dispatch('fetchBanks'));
+    }),
+    test() {
+      //console.log(this.$store.state);
+    },
+  }
 };
 </script>
 

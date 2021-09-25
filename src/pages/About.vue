@@ -10,10 +10,5 @@
 
 export default {
   name: 'About',
-  methods: {
-    asyncData({ store }) {
-      store.commit('INCREMENT');
-    },
-  }
 };
 </script>

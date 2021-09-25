@@ -1,4 +1,4 @@
-const https = require('https');
+const http = require('http');
 const path = require('path');
 let fs = require('fs');
 const { renderToString } = require('@vue/server-renderer');
@@ -12,12 +12,6 @@ const template = fs.readFileSync(path.join(__dirname, '/dist/client/index.html')
   .toString();
 
 const createApp = require(appPath).default;
-
-const serverOptions = {
-  key: fs.readFileSync(path.join(__dirname, 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'cert.pem')),
-};
-
 
 const STATIC = ['/img', '/js', '/css', '/favicon.ico'];
 const staticConfig = ServeStatic.genConfigForAll(STATIC, './dist/client', __dirname);
@@ -77,7 +71,7 @@ const serve = async (req, res) => {
   res.end(html);
 };
 
-https.createServer(serverOptions, async (req, res) => {
+http.createServer(async (req, res) => {
   console.log('New REQ:', req.url);
   if (process.env.HMR) {
     devServerMiddleware(req, res, serve);
@@ -86,4 +80,4 @@ https.createServer(serverOptions, async (req, res) => {
   }
 }).listen(8080);
 
-console.log('You can navigate to https://localhost:8080');
+console.log('You can navigate to http://localhost:8080');

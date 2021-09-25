@@ -14,10 +14,8 @@ export default {
   components: {
     Header,
   },
-  methods: {
-    asyncData({ store }) {
-      store.commit('INCREMENT');
-    },
-  }
+  mounted() {
+    console.log(this.$store.state.main);
+  },
 };
 </script>
