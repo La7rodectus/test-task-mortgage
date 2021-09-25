@@ -1,6 +1,6 @@
 
 const routes = {
-  '/map': { accessRequired: 0, executor: () => 'map', contentType: 'text/html' }
+  '/': { accessRequired: 0, executor: () => 'map', contentType: 'text/html' }
 };
 
 

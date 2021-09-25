@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const connData = require('./secret.js').dbConnData;
+const connData = require('../../secret.js').dbConnData;
 
 const getConnection = () => new Promise((resolve, reject) => {
   const conn = mysql.createConnection(connData);

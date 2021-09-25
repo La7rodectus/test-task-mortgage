@@ -1,6 +1,6 @@
 const Procedures = require('./procedures.js');
-const Connection = require('./dbConnection.js');
-const DatabaseDataValidator = require('./dbDataValidator.js').default;
+const Connection = require('./connection.js');
+const DatabaseDataValidator = require('./dataValidator.js').default;
 
 const defaultOptions = {
   dbdv: DatabaseDataValidator,
@@ -10,7 +10,10 @@ const defaultOptions = {
 //data base controller
 class DBC {
   constructor(options = {}) {
+    this._conn = null;
     this.options = { ...defaultOptions, ...options };
+    this.dbdv = null;
+    this.schema = null;
   }
 
   connect = (cb) => new Promise((resolve, reject) => {
@@ -24,6 +27,10 @@ class DBC {
 
   init = (dbSchema) => new Promise(async (resolve, reject) => {
     try {
+      if (!this._conn) {
+        const err = await this.connect();
+        if (err) throw err;
+      }
       const schema = dbSchema ? dbSchema : await this.queryDbSchema();
       this.schema = schema;
       this.dbdv = new this.options.dbdv(this.schema);
@@ -62,50 +69,36 @@ class DBC {
     }
   });
 
-  getUserByNickName = (name) => new Promise(async (resolve, reject) => {
-    try {
-      const data = await Procedures.getUserByNickName(this._conn, name);
-      const rows = data[0];
-      const res = rows[0];
-      resolve(res);
-    } catch (err) {
-      reject(err);
-    }
-  });
+  insertBank = (updateObj) => Procedures.insertIntoTable(this._conn, 'Banks', updateObj);
 
-  insertUser = (nickName, firstName, secondName, email, accessLevel, age, sex) => new Promise(async (resolve, reject) => {
-    try {
-      await Procedures.insertUser(this._conn, nickName, firstName, secondName, email, accessLevel, age, sex);
-      resolve(true);
-    } catch (err) {
-      reject(err);
-    }
-  });
+  updateBankByName = (name, updateObj) => Procedures.updateTable(this._conn, 'Banks', 'bankName', name, updateObj);
 
-  updateUserByNickName = (name, updateObj) => Procedures.updateTable(this._conn, 'Users', 'nickName', name, updateObj);
-
-  deleteFromUsersByNickName = (name) => Procedures.deleteRowsFromTable(this._conn, 'Users', 'nickName', name);
+  deleteFromBankByName = (name) => Procedures.deleteRowsFromTable(this._conn, 'Banks', 'bankName', name);
 
 }
 
 module.exports.default = DBC;
 
 //example
-const dbc = new DBC();
-(async () => {
-  let res;
+
+// const dbc = new DBC();
+// (async () => {
+//   let res;
   
-  try {
-    const errConnect = await dbc.connect();
-    if (errConnect) return console.log('const error connect:', errConnect);
-    const errInit = await dbc.init();
-    if (errInit) return console.log('const error init:', errInit);
-    const dbdv = new DatabaseDataValidator(await dbc.queryDbSchema());
-    console.log(dbdv.validate('Users', 'user_id', 2));
-    //res = await dbc.insertUser('LTR', 'myFirstName', 'mySecondName', 'myEmail', '1', 2, 'w');
-    //res = await dbc.getDbSchema();
-  } catch (err) {
-    console.log('catch error:', err)
-  }
-  console.log(res);
-})()
+//   try {
+//     const err = await dbc.init();
+//     if (err) return console.log('const error connect:', err);
+//     res = await dbc.insertBank({
+//       bankName: `'bank name'`,
+//       interstRate: 10,
+//       maxLoan: 10.5,
+//       minDownPayment: 5,
+//       loanTerm: 50,
+//     });
+
+
+//   } catch (err) {
+//     console.log('catch error:', err)
+//   }
+//   console.log(res);
+// })()

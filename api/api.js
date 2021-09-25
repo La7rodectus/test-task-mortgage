@@ -1,10 +1,10 @@
-const https = require('http');
+const http = require('http');
 const path = require('path');
 let fs = require('fs');
 const getRoute = require('./apiRouter.js').getRoute;
 
 const PORT = process.env.port || 7070;
-const URL = 'https://localhost:';
+const URL = 'http://localhost:';
 
 const execReq = async (req, res) => {
   console.log('New API REQ:', req.url);
@@ -19,4 +19,4 @@ http.createServer(async (req, res) => {
   execReq(req, res);
 }).listen(PORT);
 
-console.log(`Api listen on ${PORT}`);
+console.log(`Api listen on ${URL}${PORT}`);
