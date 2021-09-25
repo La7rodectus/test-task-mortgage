@@ -1,4 +1,4 @@
-const replaceAt = require('../helpers.js');
+const replaceAt = require('../helpers.js').replaceAt;
 
 const insertIntoTable = (conn, tableName, insertObj) => {
   const values = Object.values(insertObj).join(', ');

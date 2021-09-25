@@ -1,4 +1,4 @@
-const getJson = require('../../utils/getJson.js').default;
+const wdo = require('../../utils/wdo.js');
 
 export default {
   state: {
@@ -19,7 +19,7 @@ export default {
   },
   actions: {
     fetchBanks: ({ commit }) => new Promise((resolve, reject) => {
-      getJson('http://localhost:7070/getBanks?').then((banks) => {
+      wdo.get('http://localhost:7070/getBanks?').then((banks) => {
         commit('replaceBanks', banks);
         commit('setBanksLoaded', true);
         resolve();
@@ -27,7 +27,7 @@ export default {
     }),
     isUniqueBankName: (...args) => new Promise((resolve, reject) => {
       const { name } = args[args.length - 1];
-      getJson(`http://localhost:7070/isUniqueBankName?${name}`).then((bool) => {
+      wdo.get(`http://localhost:7070/isUniqueBankName?${name}`).then((bool) => {
         console.log('bool:', !!bool);
         resolve(!!bool);
       }).catch((err) => reject(err));

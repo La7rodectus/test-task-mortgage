@@ -1,6 +1,6 @@
 const DBC = require('../db/dbc.js').default;
 
-const isUniqueBankName = async (name) => {
+const isUniqueBankName = async ({ name }) => {
   const dbc = new DBC();
   const err = await dbc.init();
   if (err) return { res: null, err };
