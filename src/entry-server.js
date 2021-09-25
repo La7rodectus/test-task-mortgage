@@ -16,6 +16,7 @@ export default (context) => new Promise((resolve, reject) => {
     const matchedComponents = routerMatched
       .map((matched) => getComponentsOfComponent(matched))
       .flat();
+    matchedComponents.push(app._component);
 
     // call `asyncData()` on all matched route components
     Promise.all(matchedComponents.map((component) => {

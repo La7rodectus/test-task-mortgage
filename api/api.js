@@ -10,9 +10,10 @@ const execReq = async (req, res) => {
   console.log('New API REQ:', req.url);
   const urlArr = req.url.split('?');
   const urlStr = urlArr[0];
-  const argsArr = urlArr[1].split('&');
+  let argsArr = urlArr[1] ? urlArr[1].split('&') : [];
   //const accessLevel = await getUserAccess(req);
   const route = getRoute(urlStr, /*accessLevel*/);
+  console.log(argsArr)
   const {data, err} = await route.executor(...argsArr);
   if (err) return console.log(err);
   res.setHeader('Content-Type', route.contentType);

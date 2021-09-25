@@ -11,7 +11,8 @@ const isUniqueBankName = async (name) => {
   for (const bank of banks) {
     bankNames.push(bank.bankName);
   }
-  return { data: JSON.stringify(!bankNames.includes(name)), err: null };
+  const isUnique = !bankNames.includes(name);
+  return { data: isUnique ? 'true' : '', err: null };
 };
 
 module.exports.default = isUniqueBankName;

@@ -37,7 +37,6 @@ const create = (staticConfig) => {
   const config = staticConfig;
   return (req, res, fs) => {
     const pathArr = req.url.split('/').slice(1);
-    console.log(pathArr);
     const configPathPart = '/' + pathArr[0];
     if (config.has(configPathPart)) {
       const fullPath = path.join(config.get(configPathPart), req.url);

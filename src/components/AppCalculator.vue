@@ -1,43 +1,95 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <input id="someBTN" type="button" value="test" @click="test">
-    <input id="someBTN" type="number" value="money" @click="test">
-    <input id="someBTN" type="button" value="test" @click="test">
+  <div class="calculator-container">
+    <h1> Mortgage calculator </h1>
+    <p> Your Bank </p>
+    <div class="calculator-inputs-container">
+      <select v-model="selectedBankName" name="bank-select">
+        <option
+          v-for="bank in Object.values($store.getters.getBanks)"
+          :key="bank.bankName"  :value="bank.bankName">
+          {{ bank.bankName }}
+        </option>
+      </select>
+      <p> Initial loan </p>
+      <input v-model.number="initialLoan" type="number" placeholder="Initial loan">
+      <p> Down payment </p>
+      <input  v-model.number="downPayment" type="number" placeholder="Down payment">
+      <p> Result payment per month</p>
+      <p> {{ resultPayment }} </p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AppCalculator',
-  props: {
-    msg: String,
+  data: () => ({
+    selectedBankName: null,
+    initialLoan: null,
+    downPayment: null,
+
+  }),
+  computed: {
+    resultPayment() {
+      const selectedBank = this.$store.getters.getBankByName(this.selectedBankName);
+      if (!selectedBank || !this.initialLoan || !this.downPayment) return '';
+      if (this.initialLoan <= this.downPayment) {
+        return 'Initial loan must be grater than down payment!';
+      }
+      const interestRate = selectedBank.interstRate;
+      const borrowed = this.initialLoan - this.downPayment;
+      const n = selectedBank.loanTerm;
+      const interestRateDiv12 = (interestRate / 12);
+      const interestRateDiv12N = (1 + interestRateDiv12) ** n;
+      return ((borrowed * interestRateDiv12 * interestRateDiv12N) /
+        (interestRateDiv12N - 1)
+      );
+    }
   },
   methods: {
-    asyncData: ({ store }) => new Promise((resolve) => {
-      resolve(store.dispatch('fetchBanks'));
-    }),
-    test() {
-      //console.log(this.$store.state);
-    },
+
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.calculator-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  min-width: 300px;
+  min-height: 500px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.calculator-inputs-container {
+  display: flex;
+  flex-direction: column;
+
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.calculator-inputs-container > input {
+  min-width: 100px;
+  margin: 10px;
+
 }
-a {
-  color: #42b983;
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.calculator-bank-container > select {
+  width: 100px;
+  height: 25px;
+}
+
 </style>

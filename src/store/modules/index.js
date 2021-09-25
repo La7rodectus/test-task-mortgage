@@ -1,5 +1,6 @@
-import main from './main.js';
+import banksModule from './banksModule.js';
 
 export default {
-  main,
+  banksModule,
+
 };

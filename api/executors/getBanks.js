@@ -4,9 +4,13 @@ const getBanks = async () => {
   const dbc = new DBC();
   const err = await dbc.init();
   if (err) return { res: null, err };
-  const banks = await dbc.getAllBanks();
+  const banksArr = await dbc.getAllBanks();
   dbc.connDestroy();
-  if (banks.length < 1) return { res: null, err: 'empty table' };
+  if (banksArr.length < 1) return { res: null, err: 'empty table' };
+  const banks = {};
+  for (const bank of banksArr) {
+    banks[bank.bankName] = bank;
+  }
   return { data: JSON.stringify(banks), err: null };
 };
 

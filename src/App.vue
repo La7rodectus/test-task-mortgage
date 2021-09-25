@@ -5,14 +5,21 @@
 </template>
 
 <script>
-import someMixin from './mixins/someMixin.js';
 
 export default {
   name: 'App',
-  mixins: [someMixin], //global mixins
+  methods: { // global data needed for App work
+    asyncData: ({ store }) => new Promise((resolve) => {
+      resolve(store.dispatch('fetchBanks'));
+    }),
+  }
 };
 </script>
 
 <style>
+
+body, html {
+  margin: 0px;
+}
 
 </style>
