@@ -1,18 +1,18 @@
 <template>
   <div class="home">
     <router-link to="/addBank">addBank</router-link>
-    <Header msg="msg arg"/>
+    <AppCalculator msg="msg arg"/>
   </div>
 </template>
 
 <script>
 
-import Header from '../components/Header.vue';
+import AppCalculator from '../components/AppCalculator.vue';
 
 export default {
   name: 'Home',
   components: {
-    Header,
+    AppCalculator,
   },
   mounted() {
     console.log(this.$store.state.main);

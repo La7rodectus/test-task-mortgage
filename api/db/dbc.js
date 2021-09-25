@@ -25,6 +25,11 @@ class DBC {
     });
   });
 
+  connDestroy() {
+    this._conn.destroy();
+    this._conn = null;
+  }
+
   init = (dbSchema) => new Promise(async (resolve, reject) => {
     try {
       if (!this._conn) {
@@ -75,6 +80,10 @@ class DBC {
 
   deleteFromBankByName = (name) => Procedures.deleteRowsFromTable(this._conn, 'Banks', 'bankName', name);
 
+  getAllBanks = () => Procedures.getAllFromTable(this._conn, 'Banks');
+
+  getBankByName = (name) => Procedures.getFromTableBy(this._conn, 'Banks', 'bankName', name);
+
 }
 
 module.exports.default = DBC;
@@ -89,11 +98,11 @@ module.exports.default = DBC;
 //     const err = await dbc.init();
 //     if (err) return console.log('const error connect:', err);
 //     res = await dbc.insertBank({
-//       bankName: `'bank name'`,
-//       interstRate: 10,
-//       maxLoan: 10.5,
-//       minDownPayment: 5,
-//       loanTerm: 50,
+//       bankName: `'monobank'`,
+//       interstRate: 4,
+//       maxLoan: 1230.1,
+//       minDownPayment: 3,
+//       loanTerm: 77,
 //     });
 
 

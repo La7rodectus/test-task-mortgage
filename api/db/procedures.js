@@ -44,6 +44,31 @@ const getBaseTableNames = (conn) => {
   });
 };
 
+const getAllFromTable = (conn, tableName) => {
+  const q = `SELECT * FROM ${tableName}`;
+  return new Promise((resolve, reject) => {
+    conn.query(q, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(res);
+    });
+  });
+};
+
+const getFromTableBy = (conn, tableName, whereIdField, someId) => {
+  someId = typeof someId === 'number' ? someId : `\'${someId}\'`;
+  const q = `SELECT * FROM ${tableName} WHERE ${whereIdField} = ${someId};`;
+  return new Promise((resolve, reject) => {
+    conn.query(q, (err, res) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(res);
+    });
+  });
+};
+
 const updateTable = (conn, tableName, whereIdField, someId, updateObj) => {
   let setRow = '';
   for (const field in updateObj) setRow += `${field} = ${updateObj[field]},\n`;
@@ -86,5 +111,7 @@ module.exports = {
   insertIntoTable,
   getBaseTableNames,
   descTable,
+  getAllFromTable,
+  getFromTableBy,
   
 };
