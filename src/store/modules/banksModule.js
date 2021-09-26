@@ -1,6 +1,6 @@
 const wdo = require('../../utils/wdo.js');
 
-const API = 'https://api-mortgage-calc-me.herokuapp.com/';
+const API = 'http://api-mortgage-calc-me.herokuapp.com';
 
 export default {
   state: {
