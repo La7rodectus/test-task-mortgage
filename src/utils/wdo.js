@@ -23,7 +23,6 @@ const post = (url, data) => new Promise((resolve, reject) => {
   const uHostname = u.hostname;
   const uPathname = u.pathname;
   const uPort = u.port;
-  console.log(u);
   const options = {
     hostname: uHostname,
     port: uPort,
