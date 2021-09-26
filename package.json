@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "test-task-mortgage site",
   "scripts": {
-    "start": "vue-cli-service build --dest dist/server && cross-env SSR=1 vue-cli-service build --dest dist/client && npm run start"
+    "start": "vue-cli-service build --dest dist/server && cross-env SSR=1 vue-cli-service build --dest dist/client && node server.js"
   },
   "dependencies": {
     "@vue/server-renderer": "^3.1.4",
