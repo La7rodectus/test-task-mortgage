@@ -35,6 +35,8 @@ if (process.env.HMR) {
   }
 }
 
+const PORT = process.env.PORT || 8080;
+
 const serve = async (req, res) => {
   if (process.env.HMR) fs = res.locals.fs;
 
@@ -76,6 +78,6 @@ http.createServer(async (req, res) => {
   } else {
     serve(req, res);
   }
-}).listen(8080);
+}).listen(PORT);
 
 console.log('You can navigate to http://localhost:8080');
