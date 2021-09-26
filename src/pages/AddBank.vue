@@ -1,19 +1,16 @@
 <template>
   <div class="page-container">
     <app-header />
-    <div class="app-bank-edit-container">
+    <div class="app-add-bank-container">
 
-      <h1> Mortgage calculator </h1>
-      <h2>Edit {{ oldBName }}</h2>
+      <h1> Add new bank </h1>
 
       <div class="app-bank-edit-input-pair-cell">
         <p> Bank name </p>
         <div class="app-bank-edit-input-pair-cell-inputs-wrapper">
           <input type="text" placeholder="Name of the bank"
-            :disabled="!bankNameChecked"
-            v-model="bank.bankName"
+            v-model="bankName"
           >
-          <input type="checkbox" v-model="bankNameChecked">
         </div>
       </div>
 
@@ -21,10 +18,8 @@
         <p> Interst rate </p>
         <div class="app-bank-edit-input-pair-cell-inputs-wrapper">
           <input type="number" placeholder="Interst rate"
-            :disabled="!interstRateChecked"
-            v-model.number="bank.interstRate"
+            v-model.number="interstRate"
           >
-          <input type="checkbox" v-model="interstRateChecked">
         </div>
 
       </div>
@@ -33,10 +28,8 @@
         <p> Max loan </p>
         <div class="app-bank-edit-input-pair-cell-inputs-wrapper">
           <input type="number" placeholder="Max loan"
-            :disabled="!maxLoanChecked"
-            v-model.number="bank.maxLoan"
+            v-model.number="maxLoan"
           >
-          <input type="checkbox" v-model="maxLoanChecked">
         </div>
       </div>
 
@@ -44,10 +37,8 @@
         <p> Min down payment </p>
         <div class="app-bank-edit-input-pair-cell-inputs-wrapper">
           <input type="number" placeholder="Min down payment"
-            :disabled="!minDownPaymentChecked"
-            v-model.number="bank.minDownPayment"
+            v-model.number="minDownPayment"
           >
-          <input type="checkbox" v-model="minDownPaymentChecked">
         </div>
       </div>
 
@@ -55,10 +46,8 @@
         <p> Loan term </p>
         <div class="app-bank-edit-input-pair-cell-inputs-wrapper">
           <input type="number" placeholder="Loan term"
-            :disabled="!loanTermChecked"
-            v-model.number="bank.loanTerm"
+            v-model.number="loanTerm"
           >
-            <input type="checkbox" v-model="loanTermChecked">
         </div>
       </div>
       <p id="submit-form-button">
@@ -80,8 +69,11 @@ export default {
 
   },
   data: () => ({
-    bank: Object,
-    oldBName: null,
+    bankName: null,
+    interstRate: null,
+    maxLoan: null,
+    minDownPayment: null,
+    loanTerm: null,
     interstRateChecked: false,
     bankNameChecked: false,
     maxLoanChecked: false,
@@ -89,18 +81,17 @@ export default {
     loanTermChecked: false,
 
   }),
-  created() {
-    this.bank = this.$store.state.banksModule.banks[this.$route.params.name];
-    this.oldBName = this.bank.bankName;
-  },
   methods: {
     submitForm() {
       const postData = {
-        oldBName: this.oldBName,
-        bank: this.$data.bank,
+        bankName: this.bankName,
+        interstRate: this.interstRate,
+        maxLoan: this.maxLoan,
+        minDownPayment: this.minDownPayment,
+        loanTerm: this.loanTerm,
       };
-      this.$store.dispatch('updateBank', { postData });
-      this.$router.replace('/');
+      console.log(JSON.stringify(postData));
+      this.$store.dispatch('addBank', { postData });
     },
   }
 };
@@ -130,7 +121,7 @@ input[type=checkbox] {
   height: 25px;
 }
 
-.app-bank-edit-container {
+.app-add-bank-container {
   width: 40%;
   min-width: 250px;
   display: flex;

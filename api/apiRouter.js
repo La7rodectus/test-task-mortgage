@@ -1,10 +1,12 @@
 const executors = require('./executors').default;
 
 const routes = {
-  '/getBanks': { accessRequired: 0, executor: (args) => executors.getBanks(), contentType: 'application/json' },
-  '/isUniqueBankName': { accessRequired: 0, executor: (args) => executors.isUniqueBankName(args), contentType: 'application/json' },
-  '/updateBank': { accessRequired: 0, executor: (args) => executors.updateBank(args), contentType: 'application/json' },
-  '/404': { accessRequired: 0, executor: () => '404', contentType: 'application/json' },
+  '/getBanks': { accessRequired: 0, executor: () => executors.getBanks(), contentType: 'text/plain' },
+  '/isUniqueBankName': { accessRequired: 0, executor: (args) => executors.isUniqueBankName(args), contentType: 'text/plain' },
+  '/updateBank': { accessRequired: 0, executor: (args) => executors.updateBank(args), contentType: 'text/plain' },
+  '/removeBank': { accessRequired: 0, executor: (args) => executors.removeBank(args), contentType: 'text/plain' },
+  '/addBank': { accessRequired: 0, executor: (args) => executors.addBank(args), contentType: 'text/plain' },
+  '/404': { accessRequired: 0, executor: () => ({ data: null, err: '404' }), contentType: 'text/plain' },
 };
 
 

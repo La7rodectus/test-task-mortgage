@@ -1,6 +1,9 @@
 const replaceAt = require('../helpers.js').replaceAt;
+const { wrapStr, wrapUpdateObjFields } = require('../helpers.js');
+
 
 const insertIntoTable = (conn, tableName, insertObj) => {
+  insertObj = wrapUpdateObjFields(insertObj);
   const values = Object.values(insertObj).join(', ');
   const fields = Object.keys(insertObj).join(', ');
   ///
@@ -57,7 +60,7 @@ const getAllFromTable = (conn, tableName) => {
 };
 
 const getFromTableBy = (conn, tableName, whereIdField, someId) => {
-  someId = typeof someId === 'number' ? someId : `\'${someId}\'`;
+  someId = wrapStr(someId);
   const q = `SELECT * FROM ${tableName} WHERE ${whereIdField} = ${someId};`;
   return new Promise((resolve, reject) => {
     conn.query(q, (err, res) => {
@@ -71,10 +74,11 @@ const getFromTableBy = (conn, tableName, whereIdField, someId) => {
 
 const updateTable = (conn, tableName, whereIdField, someId, updateObj) => {
   let setRow = '';
+  updateObj = wrapUpdateObjFields(updateObj);
+  someId = wrapStr(someId);
   for (const field in updateObj) setRow += `${field} = ${updateObj[field]},\n`;
   const lastComaId = setRow.lastIndexOf(',');
   setRow = replaceAt(setRow, lastComaId, ' ');
-  someId = typeof someId === 'number' ? someId : `\'${someId}\'`;
   const q = `
     UPDATE ${tableName}
     SET
@@ -93,7 +97,7 @@ const updateTable = (conn, tableName, whereIdField, someId, updateObj) => {
 };
 
 const deleteRowsFromTable = (conn, tableName, whereIdField, someId) => {
-  someId = typeof someId === 'number' ? someId : `\'${someId}\'`;
+  someId = wrapStr(someId);
   const q = `DELETE FROM ${tableName} WHERE ${whereIdField} = ${someId};`;
   return new Promise((resolve, reject) => {
     conn.query(q, (err, res) => {

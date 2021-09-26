@@ -17,35 +17,24 @@ export default {
     AppBanksCell,
 
   },
-  data: () => ({
-
-  }),
-  computed: {
-
-  },
-  mounted() {
-  },
-  methods: {
-    asyncData: ({ store }) => new Promise((resolve) => {
-      resolve(store.dispatch('isUniqueBankName', {
-        name: 'some name',
-      }));
-    }),
-
-  }
 };
 </script>
 
 
 <style scoped>
 
-.banks-container {
-  width: 60%;
-  min-width: 400px;
+.app-banks-container {
+  width: 40%;
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+}
+
+.banks-container {
+  width: 100%;
+  min-width: 250px;
 }
 
 </style>

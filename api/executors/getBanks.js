@@ -11,7 +11,7 @@ const getBanks = async () => {
   for (const bank of banksArr) {
     banks[bank.bankName] = bank;
   }
-  return { data: JSON.stringify(banks), err: null };
+  return { data: banks, err: null };
 };
 
 module.exports.default = getBanks;

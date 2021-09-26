@@ -36,11 +36,17 @@ export default {
       if (this.initialLoan <= this.downPayment) {
         return 'Initial loan must be grater than down payment!';
       }
+      console.log(selectedBank);
       const interestRate = selectedBank.interstRate;
       const borrowed = this.initialLoan - this.downPayment;
       const n = selectedBank.loanTerm;
       const interestRateDiv12 = (interestRate / 12);
       const interestRateDiv12N = (1 + interestRateDiv12) ** n;
+      console.log('interestRate', interestRate);
+      console.log('borrowed', borrowed);
+      console.log('n', n);
+      console.log('interestRateDiv12', interestRateDiv12);
+      console.log('interestRateDiv12N', interestRateDiv12N);
       return ((borrowed * interestRateDiv12 * interestRateDiv12N) /
         (interestRateDiv12N - 1)
       );

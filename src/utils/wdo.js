@@ -7,8 +7,9 @@ const get = (URL) => new Promise((resolve, reject) => {
       data += chunk;
     });
     resp.on('end', () => {
-      const dataObj = JSON.parse(data);
-      resolve(dataObj);
+      const respObj = JSON.parse(data);
+      if (respObj.err) resolve(respObj.err);
+      resolve(respObj.data);
     });
   }).on('error', (err) => {
     console.log('Error: ' + err.message);
@@ -36,7 +37,7 @@ const post = (url, data) => new Promise((resolve, reject) => {
 
   const req = http.request(options, (res) => {
     console.log(`statusCode: ${res.statusCode}`);
-    resolve();
+    resolve(res);
   });
 
   req.on('error', (err) => {
@@ -44,7 +45,6 @@ const post = (url, data) => new Promise((resolve, reject) => {
   });
 
   req.end(data);
-  resolve();
 
 });
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="page-container">
     <app-header />
     <app-banks />
   </div>
@@ -20,3 +20,14 @@ export default {
 
 };
 </script>
+
+<style scoped>
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+</style>
