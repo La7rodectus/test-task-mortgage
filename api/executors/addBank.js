@@ -1,15 +1,17 @@
 const DBC = require('../db/dbc.js').default;
 
 const addBank = async ({ data }) => {
-  console.log(data)
   const bank = JSON.parse(data);
-  console.log(bank)
   const dbc = new DBC();
   const err = await dbc.init();
-  if (err) return { res: null, err };
-  const res = await dbc.insertBank(bank);
-  dbc.connDestroy();
-  return { data: res, err: null };
+  if (err) return { ok: false, res: null, err };
+  try {
+    const res = await dbc.insertBank(bank);
+    await dbc.connDestroy();
+    return { ok: true, data: res, err: null };
+  } catch (err) {
+    return { ok: false, data: null, err };
+  }
 };
 
 module.exports.default = addBank;

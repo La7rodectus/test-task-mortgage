@@ -1,39 +1,63 @@
 <template>
-  <div class="app-footer-container">
-    <router-link to="/addBank">Add bank</router-link>
-    <router-link to="/">Mortgage calculator</router-link>
-    <router-link to="/editBank" exact>Edit banks</router-link>
+  <div class="app-header-container">
+    <div class="nav-div" @click="goTo('/addBank')">
+      <router-link to="/addBank">Add bank</router-link>
+    </div>
+    <div class="nav-div" @click="goTo('/editBank')">
+      <router-link to="/editBank">Edit banks</router-link>
+    </div>
+    <div class="nav-div" @click="goTo('/')" >
+      <router-link to="/">Mortgage calculator</router-link>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AppHeader',
+  methods: {
+    goTo(route) {
+      this.$router.push(route);
+    }
+  }
 };
 </script>
 
 
 <style scoped>
 
-.app-footer-container {
+.app-header-container {
   width: 100%;
   height: 150px;
   background-color: brown;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
 }
 
-.app-footer-container > a {
-  margin: 20px;
-  text-decoration: none;
+.nav-div {
+  width: 25%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
-.app-footer-container > a:visited { color:green; }
-.app-footer-container > a:hover { color:green; }
-.app-footer-container > a:focus { color:#000; }
-.app-footer-container > a:hover, .navBtn:active { color:#000; }
+.nav-div:hover {
+  background-color: saddlebrown;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: orange;
+}
+
+a:visited { color:orange; }
+a:hover { color:orange; }
+a:focus { color:orange; }
+a:active { color:orange; }
 
 </style>

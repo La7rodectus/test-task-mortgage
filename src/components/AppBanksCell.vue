@@ -1,10 +1,8 @@
 <template>
   <div class="app-banks-cell-container">
-    <h1> {{ bank.bankName }} </h1>
+    <h2> {{ bank.bankName }} </h2>
     <div class="cell-button-container">
-      <router-link :to="{ name: 'editBank', params: { name: bank.bankName} }" >
-        Edit
-      </router-link>
+      <button @click="linkToBank"> Edit </button>
       <button @click="removeBank"> Remove </button>
     </div>
   </div>
@@ -19,6 +17,9 @@ export default {
 
   },
   methods: {
+    linkToBank() {
+      this.$router.push({ name: 'editBank', params: { name: this.bank.bankName } });
+    },
     removeBank() {
       this.$store.dispatch('removeBank', { bankName: this.bank.bankName });
     }
@@ -34,21 +35,25 @@ export default {
   height: 100px;
   display: flex;
   flex-direction: row;
+  background-color: cadetblue;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.app-banks-cell-container > h2 {
+  padding-left: 15px;
 }
 
 .cell-button-container {
   display: flex;
   flex-direction: column;
+  width: 140px;
 }
 
 .cell-button-container > button {
-  width: 100%;
-
+  flex-grow: 2;
+  margin: 5px;
 }
 
-.cell-button-container > a {
-  display: flex;
-  flex-direction: column;
-}
 
 </style>

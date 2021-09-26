@@ -26,10 +26,6 @@ export default {
 
 <style scoped>
 
-.app-home-container {
-
-}
-
 </style>
 
 

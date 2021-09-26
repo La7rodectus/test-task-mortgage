@@ -35,6 +35,9 @@ export default {
 .banks-container {
   width: 100%;
   min-width: 250px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 </style>

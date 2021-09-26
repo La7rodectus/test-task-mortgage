@@ -62,7 +62,7 @@
         </div>
       </div>
       <p id="submit-form-button">
-        <button @click="submitForm" type="button"> submit </button>
+        <button @click="submitForm" type="button"> Accept changes </button>
       </p>
 
     </div>

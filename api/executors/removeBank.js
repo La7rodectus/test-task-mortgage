@@ -1,14 +1,18 @@
 const DBC = require('../db/dbc.js').default;
 
-const removeBank = async ({ req, argsArr }) => {
+const removeBank = async ({ argsArr }) => {
   const name = argsArr[0];
-  console.log(argsArr)
   const dbc = new DBC();
   const err = await dbc.init();
-  if (err) return { res: null, err };
-  const res = await dbc.deleteFromBankByName(name);
-  dbc.connDestroy();
-  return { data: res, err: null };
+  if (err) return { ok: false, data: null, err };
+  try {
+    const res = await dbc.deleteFromBankByName(name);
+    dbc.connDestroy();
+    return { ok: true, data: res, err: null };
+  } catch (err) {
+    return { ok: false, data: null, err };
+  }
+
 };
 
 module.exports.default = removeBank;
