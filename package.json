@@ -6,6 +6,7 @@
     "start": "vue-cli-service build --dest dist/server && cross-env SSR=1 vue-cli-service build --dest dist/client && node server.js"
   },
   "dependencies": {
+    "@vue/cli": "^4.5.13",
     "@vue/server-renderer": "^3.1.4",
     "memory-fs": "^0.4.1",
     "mysql": "^2.18.1",
